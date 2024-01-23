@@ -25,14 +25,24 @@ const toggleMenu = () => {
 menuToggleIcon.addEventListener('click', toggleMenu);
 // Open/Close search form popup
 const formOpenBtn = selectElement("#search-icon");
+const formCloseBtn = selectElement("#form-close-btn");
+const searchFormContainer = selectElement("#search-form-container");
 
+formOpenBtn.addEventListener('click', () => {
+    searchFormContainer.classList.add('activated');
+})
+formCloseBtn.addEventListener('click', () => {
+    searchFormContainer.classList.remove('activated');
+});
 // -- Close the search form popup on ESC keypress
-
+window.addEventListener('keyup', event => {
+    if(event.key === 'Escape') searchFormContainer.classList.remove('activated');
+})
 // Switch theme/add to local storage
 const bodyElement = document.body;
 const currentTheme = localStorage.getItem('currentTheme');
 if(currentTheme){
-    bodyElement.classList.toggle('light-theme')
+    bodyElement.classList.add('light-theme')
 }
 const themeToggleBtn = selectElement('#theme-toggle-btn');
 themeToggleBtn.addEventListener('click', () => {
@@ -46,3 +56,29 @@ themeToggleBtn.addEventListener('click', () => {
     }
 })
 // Swiper
+const swiper = new Swiper(".swiper", {
+    // How many slides to show
+    slidesPerView: 1,
+    // How much space between slides
+    spaceBetween: 20,
+    // Make the next and previous buttons work
+    navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+    },
+    // Make the pagination indicators work
+    pagination: {
+        el: '.swiper-pagination'
+    },
+    //Responsive breakpoints for how many slides to show at that view
+    breakpoints: {
+        // 700px and up shoes 2 slides
+        700: {
+          slidesPerView: 2
+        },
+        // 1200px and up shoes 3 slides
+        1200: {
+            slidesPerView: 3
+        }
+    }   
+});
